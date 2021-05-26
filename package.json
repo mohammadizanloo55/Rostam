@@ -22,5 +22,8 @@
   "scripts": {
     "prepare": "husky install",
     "lint": "./node_modules/.bin/eslint  . --fix"
+  },
+  "dependencies": {
+    "enquirer": "^2.3.6"
   }
 }
