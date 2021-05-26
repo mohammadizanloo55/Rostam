@@ -5,6 +5,7 @@
   "author": "mohammadizanloo55 <mohammadizanloo55@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^7.27.0",
     "husky": ">=6",
     "lint-staged": ">=10",
     "prettier": "^2.3.0"
