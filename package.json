@@ -5,6 +5,14 @@
   "author": "mohammadizanloo55 <mohammadizanloo55@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "husky": ">=6",
+    "lint-staged": ">=10",
     "prettier": "^2.3.0"
+  },
+  "lint-staged": {
+    "*.{js,txt,json,md}": "prettier --write"
+  },
+  "scripts": {
+    "prepare": "husky install"
   }
 }
