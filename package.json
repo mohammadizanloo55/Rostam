@@ -20,6 +20,7 @@
     "*.{js,txt,json,md}": "prettier --write"
   },
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "./node_modules/.bin/eslint  . --fix"
   }
 }
