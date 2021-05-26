@@ -3,5 +3,8 @@
   "version": "0.1.0",
   "main": "src/index.js",
   "author": "mohammadizanloo55 <mohammadizanloo55@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^2.3.0"
+  }
 }
