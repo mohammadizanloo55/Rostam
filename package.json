@@ -24,6 +24,7 @@
     "lint": "./node_modules/.bin/eslint  . --fix"
   },
   "dependencies": {
-    "enquirer": "^2.3.6"
+    "enquirer": "^2.3.6",
+    "ora": "^5.4.0"
   }
 }
