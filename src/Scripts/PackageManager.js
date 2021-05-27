@@ -15,3 +15,22 @@ module.exports.YarnChecker = async (
     process.exit();
   }
 };
+module.exports.AddPackage = async (
+  Package,
+  flags,
+  PackageManager = global.Config.PackageManager
+) => {
+  const Spinner = ora(`installing ${Package} package ...`).start();
+  try {
+    if (PackageManager === "Npm") {
+      await execSync(`npm install ${flags} ${Package}`);
+    } else {
+      await execSync(`yarn add ${flags} ${Package}`);
+    }
+    Spinner.succeed(`${Package} installed`);
+  } catch (err) {
+    Spinner.fail("installing fail");
+    console.error(err);
+    process.exit();
+  }
+};
