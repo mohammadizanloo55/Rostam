@@ -21,12 +21,11 @@ module.exports.AddPackage = async (
   PackageManager = global.Config.PackageManager
 ) => {
   const Spinner = ora(`installing ${Package} package ...`).start();
+  const Command = `${
+    PackageManager === "Yarn" ? "yarn add" : "Npm install"
+  } ${flags} ${Package}`;
   try {
-    if (PackageManager === "Npm") {
-      await execSync(`npm install ${flags} ${Package}`);
-    } else {
-      await execSync(`yarn add ${flags} ${Package}`);
-    }
+    await execSync(Command);
     Spinner.succeed(`${Package} installed`);
   } catch (err) {
     Spinner.fail("installing fail");
