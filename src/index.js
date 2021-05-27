@@ -2,6 +2,8 @@ const path = require("path");
 const { Select, Confirm, Input } = require("enquirer");
 
 const { GitChecker } = require(path.join(__dirname, "./Scripts/Git"));
+const { YarnChecker } = require("./Scripts/PackageManager");
+
 const FrontEnd = require(path.join(
   __dirname,
   "./Components/FrontEnd/FrontEnd"
@@ -51,10 +53,16 @@ const RunGitChecker = async (UseGit) => {
     await GitChecker();
   }
 };
+const RunYarnChecker = async (PackageManager) => {
+  if (PackageManager === "Yarn") {
+    await YarnChecker();
+  }
+};
 const App = async () => {
   const Side = await new Select(Questions.Side).run();
 
   const PackageManager = await new Select(Questions.PackageManager).run();
+  await RunYarnChecker(PackageManager);
 
   const ProjectName = await new Input(Questions.ProjectName).run();
 
