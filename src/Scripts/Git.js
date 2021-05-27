@@ -27,9 +27,12 @@ module.exports.DeleteGitIgnore = async () => {
 module.exports.GitChecker = async (
   message = "You do not have Git on your system, please install it to use it"
 ) => {
+  const Spinner = ora("Checking that git is installed ...").start();
   try {
     await execSync("git --version");
+    Spinner.succeed("git is install");
   } catch (err) {
+    Spinner.fail("git is not install");
     console.error(message);
     process.exit();
   }
