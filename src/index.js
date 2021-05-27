@@ -63,7 +63,7 @@ const App = async () => {
     ...Questions.Prettier,
     skip: !UseGit,
   }).run();
-  const Log = await new Confirm(Questions.Log).start();
+  const Log = await new Confirm(Questions.Log).run();
   global.Config = {
     Side,
     PackageManager,
