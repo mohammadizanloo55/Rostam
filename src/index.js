@@ -1,6 +1,7 @@
 const path = require("path");
 const { Select, Confirm, Input } = require("enquirer");
 
+const { GitChecker } = require(path.join(__dirname, "./Scripts/Git"));
 const FrontEnd = require(path.join(
   __dirname,
   "./Components/FrontEnd/FrontEnd"
@@ -45,6 +46,11 @@ const Questions = {
   },
 };
 
+const RunGitChecker = async (UseGit) => {
+  if (UseGit) {
+    await GitChecker();
+  }
+};
 const App = async () => {
   const Side = await new Select(Questions.Side).run();
 
@@ -53,6 +59,7 @@ const App = async () => {
   const ProjectName = await new Input(Questions.ProjectName).run();
 
   const UseGit = await new Confirm(Questions.Git.UseGit).run();
+  RunGitChecker(UseGit);
 
   const GitForConfig = await new Confirm({
     ...Questions.Git.GitForConfig,
