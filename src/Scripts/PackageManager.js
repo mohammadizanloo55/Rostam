@@ -15,11 +15,7 @@ module.exports.YarnChecker = async (
     process.exit();
   }
 };
-module.exports.AddPackage = async (
-  Package,
-  flags,
-  PackageManager = global.Config.PackageManager
-) => {
+module.exports.AddPackage = async (Package, flags, PackageManager) => {
   const Spinner = ora(`installing ${Package} package ...`).start();
   const Command = `${
     PackageManager === "Yarn" ? "yarn add" : "Npm install"
@@ -36,7 +32,7 @@ module.exports.AddPackage = async (
 module.exports.Npx = async (
   Package,
   flags,
-  PackageManager = global.Config.PackageManager,
+  PackageManager,
   ExecConfig = {}
 ) => {
   const Spinner = ora(`run ${Package} npx ...`).start();

@@ -1,9 +1,7 @@
 const path = require("path");
 
 const { AddPackage, Npx } = require(path.join(__dirname, "./PackageManager"));
-module.exports.InstallPrettier = async (
-  PackageManager = global.Config.PackageManager
-) => {
+module.exports.InstallPrettier = async (PackageManager) => {
   try {
     await AddPackage("prettier", "--dev --exact", PackageManager);
   } catch (err) {
@@ -11,9 +9,7 @@ module.exports.InstallPrettier = async (
     process.exit();
   }
 };
-module.exports.MrmLintStaged = async (
-  PackageManager = global.Config.PackageManager
-) => {
+module.exports.MrmLintStaged = async (PackageManager) => {
   try {
     await Npx("mrm lint-staged", "", PackageManager);
   } catch (err) {
