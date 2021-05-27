@@ -34,3 +34,23 @@ module.exports.AddPackage = async (
     process.exit();
   }
 };
+module.exports.Npx = async (
+  Package,
+  flags,
+  PackageManager = global.Config.PackageManager,
+  ExecConfig = {}
+) => {
+  const Spinner = ora(`run ${Package} npx ...`).start();
+  try {
+    if (PackageManager === "Npm") {
+      await execSync(`npx ${Package} ${flags} --use-npm`);
+    } else {
+      await execSync(`npx ${Package} ${flags}`, ExecConfig);
+    }
+    Spinner.succeed(`${Package} done`);
+  } catch (err) {
+    Spinner.fail(`${Package} Could not run`);
+    console.error(err);
+    process.exit();
+  }
+};
