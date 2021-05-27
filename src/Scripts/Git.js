@@ -37,3 +37,14 @@ module.exports.GitChecker = async (
     process.exit();
   }
 };
+module.exports.GitAdd = async (WitchFiles) => {
+  const Spinner = ora(`Adding ${WitchFiles} files ...`).start();
+  try {
+    await execSync(`git add ${WitchFiles}`);
+    Spinner.succeed(`(${WitchFiles}) Files Added to git`);
+  } catch (err) {
+    Spinner.fail(`(${WitchFiles}) Files cant Added to git`);
+    console.log(err);
+    process.exit();
+  }
+};
