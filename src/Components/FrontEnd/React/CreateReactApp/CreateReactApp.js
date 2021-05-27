@@ -1,6 +1,10 @@
 const path = require("path");
 const { DeleteGitFolder, DeleteGitIgnore } = require("../../../../Scripts/Git");
-const { Npx } = require("../../../../Scripts/PackageManager");
+
+const { Npx } = require(path.join(
+  __dirname,
+  "../../../../Scripts/PackageManager"
+));
 
 const RunCreateReactAppNpx = async () => {
   const { PackageManager, ProjectName, Log } = global.Config;
