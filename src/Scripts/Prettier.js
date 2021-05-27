@@ -35,3 +35,20 @@ module.exports.ChangeLintStagedConfig = async () => {
     process.exit();
   }
 };
+module.exports.AddCleanCommand = async () => {
+  const PackageDotJson = JSON.parse(await fs.readFileSync("package.json"));
+  const Spinner = ora("Adding Clean script to the package.json ");
+  try {
+    PackageDotJson.scripts.clean =
+      "prettier '**/*' --write .  --ignore-unknown";
+    await fs.writeFileSync(
+      "package.json",
+      JSON.stringify(PackageDotJson, null, 2)
+    );
+    Spinner.succeed("Clean script added");
+  } catch (err) {
+    Spinner.fail("Clean script can be added");
+    console.log(err);
+    process.exit();
+  }
+};
