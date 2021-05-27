@@ -41,7 +41,7 @@ const Questions = {
     GitForConfig: {
       name: "GitForConfig",
       initial: true,
-      message: "do you want Git for javascript-starter configuration",
+      message: "do you want Git for Rostam configuration",
     },
   },
 };
