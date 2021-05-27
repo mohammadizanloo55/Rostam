@@ -5,6 +5,16 @@ const { Npx } = require(path.join(
   __dirname,
   "../../../../Scripts/PackageManager"
 ));
+const {
+  InstallPrettier,
+  MrmLintStaged,
+} = require("../../../../Scripts/Prettier");
+
+const { GitAdd, GitCommit } = require(path.join("../../../../Scripts/Git"));
+const { ChangeLintStagedConfig } = require(path.join(
+  __dirname,
+  "../../../../Scripts/Prettier"
+));
 
 const RunCreateReactAppNpx = async () => {
   const { PackageManager, ProjectName, Log } = global.Config;
@@ -20,9 +30,31 @@ const RunGitRemover = async () => {
     await DeleteGitIgnore();
   }
 };
+const RunPrettierInstaller = async () => {
+  const { UseGit, Prettier, GitForConfig, PackageManager } = global.Config;
+  if (UseGit && Prettier) {
+    try {
+      await InstallPrettier(PackageManager);
+      if (GitForConfig) {
+        await GitAdd(".");
+        await GitCommit("Added Prettier Package");
+      }
+      await MrmLintStaged(PackageManager);
+      await ChangeLintStagedConfig();
+      if (GitForConfig) {
+        await GitAdd(".");
+        await GitCommit("lint-staged will be Configured");
+      }
+    } catch (err) {
+      console.log(err);
+      process.exit();
+    }
+  }
+};
 module.exports = async () => {
   const { ProjectName } = global.Config;
   await RunCreateReactAppNpx();
   process.chdir(path.join(process.cwd(), ProjectName));
+  await RunPrettierInstaller();
   await RunGitRemover();
 };
