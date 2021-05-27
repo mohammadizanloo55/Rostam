@@ -8,13 +8,10 @@ const { Npx } = require(path.join(
 const {
   InstallPrettier,
   MrmLintStaged,
+  ChangeLintStagedConfig,
 } = require("../../../../Scripts/Prettier");
 
 const { GitAdd, GitCommit } = require(path.join("../../../../Scripts/Git"));
-const { ChangeLintStagedConfig } = require(path.join(
-  __dirname,
-  "../../../../Scripts/Prettier"
-));
 
 const RunCreateReactAppNpx = async () => {
   const { PackageManager, ProjectName, Log } = global.Config;
