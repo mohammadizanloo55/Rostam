@@ -1,4 +1,5 @@
 const { rmdirSync, unlinkSync } = require("fs");
+const { execSync } = require("child_process");
 const ora = require("ora");
 
 module.exports.DeleteGitFolder = async () => {
@@ -20,6 +21,16 @@ module.exports.DeleteGitIgnore = async () => {
   } catch (err) {
     Spinner.fail(err);
     console.error(err);
+    process.exit();
+  }
+};
+module.exports.GitChecker = async (
+  message = "You do not have Git on your system, please install it to use it"
+) => {
+  try {
+    await execSync("git --version");
+  } catch (err) {
+    console.error(message);
     process.exit();
   }
 };
