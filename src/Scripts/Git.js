@@ -51,7 +51,7 @@ module.exports.GitAdd = async (WitchFiles) => {
 module.exports.GitCommit = async (message) => {
   const Spinner = ora(` Committing  ${message} ...`).start();
   try {
-    await execSync(`git commit ${message}`);
+    await execSync(`git commit -m '${message}'`);
     Spinner.succeed(`Committed  ${message}`);
   } catch (err) {
     Spinner.fail(`${message} not Committed `);
