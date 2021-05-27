@@ -5,12 +5,11 @@ const CreateReactApp = require(path.join(
   __dirname,
   "./React/CreateReactApp/CreateReactApp"
 ));
-const None = require(path.join(__dirname, "./None/None"));
 const Questions = {
   FrameWorks: {
     initial: "React",
     message: "Choose your framework",
-    choices: ["React", "none"],
+    choices: ["React"],
   },
 };
 const FrontEnd = async () => {
@@ -18,10 +17,6 @@ const FrontEnd = async () => {
   switch (FrameWork) {
     case "React": {
       await CreateReactApp();
-      break;
-    }
-    case "None": {
-      await None();
       break;
     }
     default: {
