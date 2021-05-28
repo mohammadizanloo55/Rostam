@@ -49,3 +49,17 @@ module.exports.Npx = async (
     process.exit();
   }
 };
+module.exports.RunScript = async (PackageManager, ScriptName) => {
+  const Command = `${
+    PackageManager === "Npm" ? "npm" : "yarn"
+  } run ${ScriptName}`;
+  const Spinner = ora(`Run ${ScriptName} Script`).start();
+  try {
+    await execSync(Command);
+    Spinner.succeed(`${ScriptName} Script Done`);
+  } catch (err) {
+    Spinner.fail(`${ScriptName} Script failed`);
+    console.log(err);
+    process.exit();
+  }
+};
