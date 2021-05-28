@@ -2,7 +2,10 @@ const path = require("path");
 const fs = require("fs");
 const ora = require("ora");
 
-const { AddPackage, Npx } = require(path.join(__dirname, "./PackageManager"));
+const { AddPackage, Npx, RunScript } = require(path.join(
+  __dirname,
+  "./PackageManager"
+));
 module.exports.InstallPrettier = async (PackageManager) => {
   try {
     await AddPackage("prettier", "--dev --exact", PackageManager);
@@ -49,6 +52,14 @@ module.exports.AddCleanCommand = async () => {
   } catch (err) {
     Spinner.fail("Clean script can be added");
     console.log(err);
+    process.exit();
+  }
+};
+module.exports.RunCleanScript = async (PackageManager) => {
+  try {
+    await RunScript(PackageManager, "clean");
+  } catch (error) {
+    console.log(error);
     process.exit();
   }
 };
