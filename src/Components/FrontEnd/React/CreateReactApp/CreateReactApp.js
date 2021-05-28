@@ -9,6 +9,8 @@ const {
   InstallPrettier,
   MrmLintStaged,
   ChangeLintStagedConfig,
+  RunCleanScript,
+  AddCleanCommand,
 } = require("../../../../Scripts/Prettier");
 
 const { GitAdd, GitCommit } = require(path.join("../../../../Scripts/Git"));
@@ -41,6 +43,12 @@ const RunPrettierInstaller = async () => {
       if (GitForConfig) {
         await GitAdd(".");
         await GitCommit("lint-staged will be Configured");
+      }
+      await AddCleanCommand();
+      await RunCleanScript(PackageManager);
+      if (GitForConfig) {
+        await GitAdd(".");
+        await GitCommit("All file cleaned with clean script");
       }
     } catch (err) {
       console.log(err);
