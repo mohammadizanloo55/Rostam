@@ -13,7 +13,7 @@ const {
   InstallPrettier,
   MrmLintStaged,
   ChangeLintStagedConfig,
-} = require("../../../../Scripts/Prettier");
+} = require(path.join(__dirname, "../../../../Scripts/Prettier"));
 
 const RunGitInit = async () => {
   const { UseGit } = global.Config;
