@@ -13,7 +13,9 @@ const {
   AddCleanCommand,
 } = require("../../../../Scripts/Prettier");
 
-const { GitAdd, GitCommit } = require(path.join("../../../../Scripts/Git"));
+const { GitAdd, GitCommit, GitInit } = require(path.join(
+  "../../../../Scripts/Git"
+));
 
 const RunCreateReactAppNpx = async () => {
   const { PackageManager, ProjectName, Log } = global.Config;
@@ -23,10 +25,16 @@ const RunCreateReactAppNpx = async () => {
   });
 };
 const RunGitRemover = async () => {
-  const { UseGit } = global.Config;
+  const { UseGit, GitForConfig } = global.Config;
   if (!UseGit) {
     await DeleteGitFolder();
     await DeleteGitIgnore();
+  }
+  if (!GitForConfig) {
+    await DeleteGitFolder();
+    await GitInit();
+    await GitAdd(".");
+    await GitCommit("Initialize project with Rostam");
   }
 };
 const RunPrettierInstaller = async () => {
