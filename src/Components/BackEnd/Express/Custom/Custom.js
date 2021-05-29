@@ -9,6 +9,11 @@ const { InitPackageManager } = require(path.join(
   __dirname,
   "../../../../Scripts/PackageManager"
 ));
+const {
+  InstallPrettier,
+  MrmLintStaged,
+  ChangeLintStagedConfig,
+} = require("../../../../Scripts/Prettier");
 
 const RunGitInit = async () => {
   const { UseGit } = global.Config;
@@ -39,6 +44,22 @@ const RunInitPackageManager = async (Path) => {
     license: "MIT",
   });
 };
+const RunPrettierInstaller = async () => {
+  const { PackageManager, GitForConfig, UseGit, Prettier } = global.Config;
+  if (UseGit && Prettier) {
+    await InstallPrettier(PackageManager);
+    if (GitForConfig) {
+      await GitAdd(".");
+      await GitCommit("Added Prettier Package");
+    }
+    await MrmLintStaged(PackageManager);
+    await ChangeLintStagedConfig();
+    if (GitForConfig) {
+      await GitAdd(".");
+      await GitCommit("lint-staged will be Configured");
+    }
+  }
+};
 module.exports = async () => {
   const { ProjectName } = global.Config;
   const ProjectDirectory = path.join(process.cwd(), ProjectName);
@@ -47,4 +68,5 @@ module.exports = async () => {
   await RunGitInit();
   await RunCreateGitIgnore(ProjectDirectory);
   await RunInitPackageManager(ProjectDirectory);
+  await RunPrettierInstaller();
 };
