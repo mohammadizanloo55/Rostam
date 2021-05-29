@@ -14,7 +14,10 @@ const {
   MrmLintStaged,
   ChangeLintStagedConfig,
 } = require(path.join(__dirname, "../../../../Scripts/Prettier"));
-
+const { AddPackage } = require(path.join(
+  __dirname,
+  "../../../../Scripts/PackageManager"
+));
 const RunGitInit = async () => {
   const { UseGit } = global.Config;
   if (UseGit) {
@@ -59,6 +62,14 @@ const RunPrettierInstaller = async () => {
     }
   }
 };
+const RunExpressInstaller = async () => {
+  const { PackageManager, GitForConfig } = global.Config;
+  await AddPackage("express", "", PackageManager);
+  if (GitForConfig) {
+    await GitAdd(".");
+    await GitCommit("Added express package");
+  }
+};
 module.exports = async () => {
   const { ProjectName } = global.Config;
   const ProjectDirectory = path.join(process.cwd(), ProjectName);
@@ -68,4 +79,5 @@ module.exports = async () => {
   await RunCreateGitIgnore(ProjectDirectory);
   await RunInitPackageManager(ProjectDirectory);
   await RunPrettierInstaller();
+  await RunExpressInstaller();
 };
