@@ -5,5 +5,5 @@
 # how i can use ?
 
 ```sh
- $ npx Rostam
+ $ npx rostam
 ```
