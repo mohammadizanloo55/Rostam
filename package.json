@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "author": "mohammadizanloo55 <mohammadizanloo55@gmail.com>",
   "license": "MIT",
-  "bin": "./bin/run",
+  "bin": "./bin/run.js",
   "devDependencies": {
     "@fullstacksjs/eslint-config": "^6.1.0",
     "eslint": "^7.27.0",
