@@ -59,3 +59,12 @@ module.exports.GitCommit = async (message) => {
     process.exit();
   }
 };
+module.exports.GitInit = async () => {
+  const Spinner = ora("git init").start();
+  try {
+    await execSync("git init");
+    Spinner.succeed("done");
+  } catch (err) {
+    Spinner.fail("git init fail");
+  }
+};
