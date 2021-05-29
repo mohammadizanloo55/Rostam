@@ -1,4 +1,5 @@
-const { rmdirSync, unlinkSync } = require("fs");
+const path = require("path");
+const { rmdirSync, unlinkSync, writeFileSync } = require("fs");
 const { execSync } = require("child_process");
 const ora = require("ora");
 
@@ -66,5 +67,16 @@ module.exports.GitInit = async () => {
     Spinner.succeed("git successfully init");
   } catch (err) {
     Spinner.fail("git init fail");
+  }
+};
+module.exports.CreateGitIgnore = async (Path, Files) => {
+  const Spinner = ora("Creating .gitignore file").start();
+  try {
+    await writeFileSync(`${path.join(Path, ".gitignore")}`, Files);
+    Spinner.succeed(".gitignore Created");
+  } catch (error) {
+    Spinner.fail(".gitignore Could not create");
+    console.log(error);
+    process.exit();
   }
 };
