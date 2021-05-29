@@ -28,6 +28,14 @@
     "enquirer": "^2.3.6",
     "ora": "^5.4.0"
   },
+  "keywords": [
+    "generator",
+    "react",
+    "express",
+    "cli",
+    "FrontEnd",
+    "BackEnd"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/mohammadizanloo55/Rostam"
