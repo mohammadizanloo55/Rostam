@@ -17,7 +17,7 @@
     "prettier": "^2.3.0"
   },
   "lint-staged": {
-    "*.{js,txt,json,md}": "prettier --write",
+    "*.*": "prettier '**/*' --write --ignore-unknown",
     "*.js": "./node_modules/.bin/eslint --fix"
   },
   "scripts": {
