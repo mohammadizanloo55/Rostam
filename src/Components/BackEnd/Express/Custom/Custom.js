@@ -22,7 +22,6 @@ const RunGitInit = async () => {
   }
 };
 const RunCreateGitIgnore = async (Path) => {
-  console.log(Path);
   const { UseGit, GitForConfig } = global.Config;
   if (UseGit) {
     const Gitignore = await fs.readFileSync(
