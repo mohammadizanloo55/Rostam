@@ -104,4 +104,4 @@ const App = async () => {
     }
   }
 };
-App();
+module.exports = App;
