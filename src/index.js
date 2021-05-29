@@ -71,11 +71,12 @@ const App = async () => {
 
   const GitForConfig = await new Confirm({
     ...Questions.Git.GitForConfig,
+    initial: UseGit,
     skip: !UseGit,
   }).run();
-
   const Prettier = await new Confirm({
     ...Questions.Prettier,
+    initial: UseGit,
     skip: !UseGit,
   }).run();
   const Log = await new Confirm(Questions.Log).run();
