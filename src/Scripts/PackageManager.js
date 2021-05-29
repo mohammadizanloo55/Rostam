@@ -1,4 +1,6 @@
+const path = require("path");
 const { execSync } = require("child_process");
+const { writeFileSync } = require("fs");
 const ora = require("ora");
 
 module.exports.YarnChecker = async (
@@ -60,6 +62,20 @@ module.exports.RunScript = async (PackageManager, ScriptName) => {
   } catch (err) {
     Spinner.fail(`${ScriptName} Script failed`);
     console.log(err);
+    process.exit();
+  }
+};
+module.exports.InitPackageManager = async (Path, Config) => {
+  const Spinner = ora("creating package.json ...").start();
+  try {
+    await writeFileSync(
+      path.join(Path, "package.json"),
+      JSON.stringify(Config, null, 2)
+    );
+    Spinner.succeed("package.json created");
+  } catch (error) {
+    Spinner.fail("package.json Could not create");
+    console.log(error);
     process.exit();
   }
 };
