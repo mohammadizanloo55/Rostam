@@ -17,11 +17,11 @@
     "prettier": "^2.3.0"
   },
   "lint-staged": {
-    "*.{js,txt,json,md}": "prettier --write"
+    "*.{js,txt,json,md}": "prettier --write",
+    "*.js": "./node_modules/.bin/eslint --fix"
   },
   "scripts": {
-    "prepare": "husky install",
-    "lint": "./node_modules/.bin/eslint  . --fix"
+    "prepare": "husky install"
   },
   "dependencies": {
     "enquirer": "^2.3.6",
