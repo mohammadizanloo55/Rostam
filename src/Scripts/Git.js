@@ -63,7 +63,7 @@ module.exports.GitInit = async () => {
   const Spinner = ora("git init").start();
   try {
     await execSync("git init");
-    Spinner.succeed("done");
+    Spinner.succeed("git successfully init");
   } catch (err) {
     Spinner.fail("git init fail");
   }
