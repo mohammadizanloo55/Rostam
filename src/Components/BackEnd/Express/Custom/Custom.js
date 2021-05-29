@@ -5,6 +5,10 @@ const { GitInit, CreateGitIgnore, GitAdd, GitCommit } = require(path.join(
   __dirname,
   "../../../../Scripts/Git"
 ));
+const { InitPackageManager } = require(path.join(
+  __dirname,
+  "../../../../Scripts/PackageManager"
+));
 
 const RunGitInit = async () => {
   const { UseGit } = global.Config;
@@ -26,6 +30,15 @@ const RunCreateGitIgnore = async (Path) => {
     }
   }
 };
+const RunInitPackageManager = async (Path) => {
+  const { ProjectName } = global.Config;
+  await InitPackageManager(Path, {
+    name: ProjectName,
+    version: "1.0.0",
+    main: "src/index.js",
+    license: "MIT",
+  });
+};
 module.exports = async () => {
   const { ProjectName } = global.Config;
   const ProjectDirectory = path.join(process.cwd(), ProjectName);
@@ -33,4 +46,5 @@ module.exports = async () => {
   process.chdir(ProjectDirectory);
   await RunGitInit();
   await RunCreateGitIgnore(ProjectDirectory);
+  await RunInitPackageManager(ProjectDirectory);
 };
