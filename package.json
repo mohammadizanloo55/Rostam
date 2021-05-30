@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "enquirer": "^2.3.6",
-    "ora": "^5.4.0"
+    "ora": "^5.4.0",
+    "validate-npm-package-name": "^3.0.0"
   },
   "keywords": [
     "generator",
