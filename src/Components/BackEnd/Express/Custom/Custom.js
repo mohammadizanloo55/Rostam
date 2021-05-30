@@ -18,6 +18,13 @@ const { AddPackage } = require(path.join(
   __dirname,
   "../../../../Scripts/PackageManager"
 ));
+const {
+  CreateProjectDirectory,
+} = require("../../../../Scripts/ProjectDirectory");
+
+const RunCreateProjectDirectory = async (Path) => {
+  await CreateProjectDirectory(Path);
+};
 const RunGitInit = async () => {
   const { UseGit } = global.Config;
   if (UseGit) {
@@ -73,7 +80,7 @@ const RunExpressInstaller = async () => {
 module.exports = async () => {
   const { ProjectName, GitForConfig } = global.Config;
   const ProjectDirectory = path.join(process.cwd(), ProjectName);
-  await fs.mkdirSync(ProjectDirectory);
+  await RunCreateProjectDirectory(ProjectDirectory);
   process.chdir(ProjectDirectory);
   await RunGitInit();
   await RunCreateGitIgnore(ProjectDirectory);
