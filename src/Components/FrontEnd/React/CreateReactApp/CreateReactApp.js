@@ -32,7 +32,7 @@ const RunGitRemover = async () => {
     await DeleteGitFolder();
     await DeleteGitIgnore();
   }
-  if (!GitForConfig) {
+  if (UseGit && !GitForConfig) {
     await DeleteGitFolder();
     await GitInit();
     await GitAdd(".");
