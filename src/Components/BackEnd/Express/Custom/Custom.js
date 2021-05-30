@@ -78,7 +78,7 @@ const RunExpressInstaller = async () => {
   }
 };
 module.exports = async () => {
-  const { ProjectName, GitForConfig } = global.Config;
+  const { ProjectName, GitForConfig, UseGit } = global.Config;
   const ProjectDirectory = path.join(process.cwd(), ProjectName);
   await RunCreateProjectDirectory(ProjectDirectory);
   process.chdir(ProjectDirectory);
@@ -87,7 +87,7 @@ module.exports = async () => {
   await RunInitPackageManager(ProjectDirectory);
   await RunPrettierInstaller();
   await RunExpressInstaller();
-  if (!GitForConfig) {
+  if (UseGit && !GitForConfig) {
     await GitAdd(".");
     await GitCommit("Initialize project with Rostam");
   }
