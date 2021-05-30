@@ -6,6 +6,10 @@ const { YarnChecker } = require(path.join(
   __dirname,
   "./Scripts/PackageManager"
 ));
+const { ProjectDirectoryChecker } = require(path.join(
+  __dirname,
+  "./Scripts/ProjectDirectory"
+));
 
 const FrontEnd = require(path.join(
   __dirname,
@@ -68,6 +72,7 @@ const App = async () => {
   await RunYarnChecker(PackageManager);
 
   const ProjectName = await new Input(Questions.ProjectName).run();
+  await ProjectDirectoryChecker(ProjectName);
 
   const UseGit = await new Confirm(Questions.Git.UseGit).run();
   RunGitChecker(UseGit);
