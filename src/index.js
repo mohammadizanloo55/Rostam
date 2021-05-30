@@ -2,7 +2,10 @@ const path = require("path");
 const { Select, Confirm, Input } = require("enquirer");
 
 const { GitChecker } = require(path.join(__dirname, "./Scripts/Git"));
-const { YarnChecker } = require("./Scripts/PackageManager");
+const { YarnChecker } = require(path.join(
+  __dirname,
+  "./Scripts/PackageManager"
+));
 
 const FrontEnd = require(path.join(
   __dirname,
