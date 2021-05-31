@@ -19,9 +19,10 @@ const { AddPackage } = require(path.join(
   __dirname,
   "../../../../Scripts/PackageManager"
 ));
-const {
-  CreateProjectDirectory,
-} = require("../../../../Scripts/ProjectDirectory");
+const { CreateProjectDirectory } = require(path.join(
+  __dirname,
+  "../../../../Scripts/ProjectDirectory"
+));
 
 const { InstallEslint } = require(path.join(
   __dirname,
