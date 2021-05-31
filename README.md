@@ -5,11 +5,11 @@
  <h5>  Kill the project configuration dragon with rostam </h5>
  </div>
 
-# what is Rostam
+## what is Rostam
 
-### Rostam is a powerful and customizable project generator for javascript .
+Rostam is a powerful and customizable project generator for javascript.
 
-# how i can use ?
+## how i can use ?
 
 open terminal or cmd and run :
 
@@ -17,10 +17,9 @@ open terminal or cmd and run :
  $ npx rostam
 ```
 
-# Rostam Features
+## Rostam Features
 
 <img src="https://s4.uupload.ir/files/test_878w.gif" />
 
-# Todos
-
-https://github.com/mohammadizanloo55/Rostam/issues/2
+## Todos
+https://b2n.ir/a53585
