@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { Confirm } = require("enquirer");
 
 const { GitInit, CreateGitIgnore, GitAdd, GitCommit } = require(path.join(
   __dirname,
@@ -22,6 +23,20 @@ const {
   CreateProjectDirectory,
 } = require("../../../../Scripts/ProjectDirectory");
 
+const { InstallEslint } = require(path.join(
+  __dirname,
+  "../../../../Scripts/Eslint"
+));
+
+const Questions = {
+  Eslint: {
+    UseEslint: {
+      name: "Eslint",
+      initial: true,
+      message: "do you want eslint?",
+    },
+  },
+};
 const RunCreateProjectDirectory = async (Path) => {
   await CreateProjectDirectory(Path);
 };
@@ -77,8 +92,19 @@ const RunExpressInstaller = async () => {
     await GitCommit("Added express package");
   }
 };
+const RunInstallEslint = async (UseEslint) => {
+  const { PackageManager, GitForConfig } = global.Config;
+  if (UseEslint) {
+    await InstallEslint(PackageManager);
+    if (GitForConfig) {
+      await GitAdd(".");
+      await GitCommit("Added eslint package");
+    }
+  }
+};
 module.exports = async () => {
   const { ProjectName, GitForConfig, UseGit } = global.Config;
+  const UseEslint = await new Confirm(Questions.Eslint.UseEslint).run();
   const ProjectDirectory = path.join(process.cwd(), ProjectName);
   await RunCreateProjectDirectory(ProjectDirectory);
   process.chdir(ProjectDirectory);
@@ -87,6 +113,7 @@ module.exports = async () => {
   await RunInitPackageManager(ProjectDirectory);
   await RunPrettierInstaller();
   await RunExpressInstaller();
+  await RunInstallEslint(UseEslint);
   if (UseGit && !GitForConfig) {
     await GitAdd(".");
     await GitCommit("Initialize project with Rostam");
