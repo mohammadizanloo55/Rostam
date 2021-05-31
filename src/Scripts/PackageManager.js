@@ -20,7 +20,7 @@ module.exports.YarnChecker = async (
 module.exports.AddPackage = async (Package, flags, PackageManager) => {
   const Spinner = ora(`installing ${Package} package ...`).start();
   const Command = `${
-    PackageManager === "Yarn" ? "yarn add" : "Npm install"
+    PackageManager === "Yarn" ? "yarn add" : "npm install"
   } ${flags} ${Package}`;
   try {
     await execSync(Command);
