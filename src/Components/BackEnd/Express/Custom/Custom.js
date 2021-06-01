@@ -1,12 +1,12 @@
 const fs = require("fs");
 const path = require("path");
-const { Confirm } = require("enquirer");
+const { Confirm, Select } = require("enquirer");
 
 const { GitInit, CreateGitIgnore, GitAdd, GitCommit } = require(path.join(
   __dirname,
   "../../../../Scripts/Git"
 ));
-const { InitPackageManager } = require(path.join(
+const { InitPackageManager, AddPackage } = require(path.join(
   __dirname,
   "../../../../Scripts/PackageManager"
 ));
@@ -15,19 +15,18 @@ const {
   MrmLintStaged,
   ChangeLintStagedConfig,
 } = require(path.join(__dirname, "../../../../Scripts/Prettier"));
-const { AddPackage } = require(path.join(
-  __dirname,
-  "../../../../Scripts/PackageManager"
-));
+
 const { CreateProjectDirectory } = require(path.join(
   __dirname,
   "../../../../Scripts/ProjectDirectory"
 ));
 
-const { InstallEslint } = require(path.join(
-  __dirname,
-  "../../../../Scripts/Eslint"
-));
+const {
+  InstallEslint,
+  AddedEslintrc,
+  AddedEslintToLintStaged,
+  AddedLintScript,
+} = require(path.join(__dirname, "../../../../Scripts/Eslint"));
 
 const Questions = {
   Eslint: {
@@ -35,6 +34,27 @@ const Questions = {
       name: "Eslint",
       initial: true,
       message: "do you want eslint?",
+    },
+    EslintConfig: {
+      initial: "fullstacksjs",
+      message: "Choose your eslintConfig",
+      choices: [
+        {
+          name: "fullstacksjs",
+          message:
+            "@fullstacksjs/eslint-config : https://github.com/fullstacksjs/eslint-config",
+        },
+        {
+          name: "airbnb",
+          message:
+            "eslint-config-airbnb : https://github.com/airbnb/javascript",
+        },
+        {
+          name: "standard",
+          message:
+            "eslint-config-standard : https://github.com/standard/eslint-config-standard",
+        },
+      ],
     },
   },
 };
@@ -93,19 +113,70 @@ const RunExpressInstaller = async () => {
     await GitCommit("Added express package");
   }
 };
-const RunInstallEslint = async (UseEslint) => {
-  const { PackageManager, GitForConfig } = global.Config;
+const RunInstallEslint = async (UseEslint, EslintConfig, ProjectDirectory) => {
+  const { PackageManager, GitForConfig, Prettier } = global.Config;
+  const Eslintrc = {
+    extends: [],
+  };
   if (UseEslint) {
     await InstallEslint(PackageManager);
     if (GitForConfig) {
       await GitAdd(".");
       await GitCommit("Added eslint package");
     }
+    switch (EslintConfig) {
+      case "fullstacksjs": {
+        await AddPackage(
+          "@fullstacksjs/eslint-config prettier",
+          "--dev",
+          PackageManager
+        );
+        Eslintrc.extends.push("@fullstacksjs");
+        break;
+      }
+      case "airbnb": {
+        await AddPackage(
+          "eslint-config-airbnb-base eslint-plugin-import",
+          "--dev",
+          PackageManager
+        );
+        Eslintrc.extends.push("airbnb-base");
+        break;
+      }
+      default: {
+        await AddPackage(
+          "eslint-config-standard eslint-plugin-import eslint-plugin-node eslint-plugin-promise",
+          "--dev",
+          PackageManager
+        );
+        Eslintrc.extends.push("standard");
+        break;
+      }
+    }
+    if (Prettier) {
+      await AddPackage("eslint-config-prettier", "--dev", PackageManager);
+      Eslintrc.extends.push("prettier");
+      await AddedEslintToLintStaged();
+    }
+    await AddedEslintrc(ProjectDirectory, Eslintrc);
+    if (GitForConfig) {
+      await GitAdd(".");
+      await GitCommit("eslint Configured");
+    }
+    await AddedLintScript();
+    if (GitForConfig) {
+      await GitAdd(".");
+      await GitCommit("Added Lint script");
+    }
   }
 };
 module.exports = async () => {
   const { ProjectName, GitForConfig, UseGit } = global.Config;
   const UseEslint = await new Confirm(Questions.Eslint.UseEslint).run();
+  const EslintConfig = await new Select({
+    ...Questions.Eslint.EslintConfig,
+    skip: !UseEslint,
+  }).run();
   const ProjectDirectory = path.join(process.cwd(), ProjectName);
   await RunCreateProjectDirectory(ProjectDirectory);
   process.chdir(ProjectDirectory);
@@ -114,7 +185,7 @@ module.exports = async () => {
   await RunInitPackageManager(ProjectDirectory);
   await RunPrettierInstaller();
   await RunExpressInstaller();
-  await RunInstallEslint(UseEslint);
+  await RunInstallEslint(UseEslint, EslintConfig, ProjectDirectory);
   if (UseGit && !GitForConfig) {
     await GitAdd(".");
     await GitCommit("Initialize project with Rostam");
