@@ -29,7 +29,10 @@ module.exports.ChangeLintStagedConfig = async () => {
     PackageDotJson["lint-staged"] = {
       "*.*": "prettier '**/*' --write --ignore-unknown",
     };
-    fs.writeFileSync("package.json", JSON.stringify(PackageDotJson, null, 2));
+    await fs.writeFileSync(
+      "package.json",
+      JSON.stringify(PackageDotJson, null, 2)
+    );
 
     Spinner.succeed("Package.json lint-staged will be Configured");
   } catch (err) {
