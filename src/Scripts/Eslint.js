@@ -45,3 +45,22 @@ module.exports.AddedLintScript = async () => {
     process.exit();
   }
 };
+module.exports.AddedEslintToLintStaged = async () => {
+  const Spinner = ora("Adding eslint to lintstaged ").start();
+  try {
+    const PackageDotJson = await JSON.parse(fs.readFileSync("package.json"));
+    PackageDotJson["lint-staged"] = {
+      ...PackageDotJson["lint-staged"],
+      "*.js": "./node_modules/.bin/eslint --fix",
+    };
+    await fs.writeFileSync(
+      "package.json",
+      JSON.stringify(PackageDotJson, null, 2)
+    );
+    Spinner.succeed("eslint Added to lintstaged");
+  } catch (error) {
+    Spinner.fail("eslint Not added to lintstaged");
+    console.error(error);
+    process.exit();
+  }
+};
