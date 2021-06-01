@@ -26,3 +26,22 @@ module.exports.AddedEslintrc = async (Path, Configs) => {
     process.exit();
   }
 };
+module.exports.AddedLintScript = async () => {
+  const Spinner = ora("Adding lint Script to package.json").start();
+  try {
+    const PackageDotJson = await JSON.parse(fs.readFileSync("package.json"));
+    PackageDotJson.scripts = {
+      ...PackageDotJson.scripts,
+      lint: "./node_modules/.bin/eslint . --fix",
+    };
+    await fs.writeFileSync(
+      "package.json",
+      JSON.stringify(PackageDotJson, null, 2)
+    );
+    Spinner.succeed("lint script added");
+  } catch (error) {
+    Spinner.fail("lint script Not added");
+    console.error(error);
+    process.exit();
+  }
+};
