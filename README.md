@@ -1,11 +1,20 @@
 # Rostam
+
 <div align="center">
  <img src="https://s4.uupload.ir/files/example_a9by.png" alt="Kill the project configuration dragon with rostam" />
  <h5>  Kill the project configuration dragon with rostam </h5>
  <br/>
+ <a href="https://www.npmjs.com/package/rostam">
  <img alt="npm" src="https://img.shields.io/npm/dw/rostam">
- <img alt="NPM" src="https://img.shields.io/npm/l/rostam">
- <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/mohammadizanloo55/Rostam?style=social">
+ </a>
+  <a href="https://www.npmjs.com/package/rostam">
+  <img alt="NPM" src="https://img.shields.io/npm/l/rostam">
+ </a>
+  </a>
+  <a href="https://github.com/mohammadizanloo55/Rostam">
+   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/mohammadizanloo55/Rostam?style=social">
+ </a>
+
  </div>
 
 ## what is Rostam
