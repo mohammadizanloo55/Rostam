@@ -16,7 +16,7 @@ module.exports.InstallPrettier = async (PackageManager) => {
 };
 module.exports.MrmLintStaged = async (PackageManager) => {
   try {
-    await Npx("mrm lint-staged", "", PackageManager);
+    await Npx("mrm@2 lint-staged", "", PackageManager);
   } catch (err) {
     console.error(err);
     process.exit();
